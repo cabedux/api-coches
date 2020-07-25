@@ -1,20 +1,24 @@
 let connection = require('../config/db.js');
 let apiController = {};
 
-apiController.getListaCoches = (req, res) =>{
-    console.log('GET => /getListaCoches');
-    
+apiController.getListaCoches = (req, res) =>{    
     let queryAllCars = `select * from coche `;
 
-    connection.query(queryAllCars, (err, dataCar) => {
+    connection.query(queryAllCars, (err, dataCars) => {
         if (err) res.status(500).send(err);
-        if (dataCar.length == 0) res.status(404).send('Not found')
-        res.status(200).json({dataCar});
+        if (dataCars.length == 0) res.status(404).send('Not found');
+        res.status(200).json(dataCars);
     });
 };
 
 apiController.getCoche = (req, res) =>{
-    res.send('getCoche');
+    let queryOneCar = `select * from coche  where coche_id = ${req.params.id}`;
+
+    connection.query(queryOneCar, (err, dataCar) => {
+        if (err) res.status(500).send(err);
+        if (dataCar.length == 0) res.status(404).send('Not found');
+        res.status(200).json(dataCar);
+    });
 };
 
 apiController.addCoche = (req, res) =>{
@@ -26,6 +30,13 @@ apiController.updateCoche = (req, res) =>{
 };
 
 apiController.deleteCoche = (req, res) =>{
-    res.send('deleteCoche');
+    let queryOneCar = `delete from coche  where coche_id = ${req.params.id}`;
+
+    connection.query(queryOneCar, (err, dataCar) => {
+        if (err) res.status(500).send(false);
+        if (dataCar.length == 0) res.status(404).send('Not found')
+        res.status(200).send(true);
+    });
 };
+
 module.exports = apiController;
