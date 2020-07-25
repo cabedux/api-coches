@@ -40,7 +40,24 @@ apiController.addCoche = (req, res) =>{
 };
 
 apiController.updateCoche = (req, res) =>{
-    res.send('updateCoche');
+    let coche_id = req.params.id;
+    let {marca, modelo, color, potencia, puertas} = req.body;
+    let queryUpdate = `UPDATE coche SET marca = '${marca}', modelo = '${modelo}', 
+                        color = '${color}', potencia = ${potencia}, puertas = ${puertas} 
+                        WHERE coche_id = ${coche_id} `;
+                        
+    connection.query(queryUpdate, (err, result) => {
+        if (err) res.status(500).send(err);
+        if (result.length == 0) res.status(404).send('Not found');
+        
+        let queryOneCar = `select * from coche  where coche_id = ${coche_id}`;
+        connection.query(queryOneCar, (err, dataCar) => {
+            if (err) res.status(500).send(err);
+            if (dataCar.length == 0) res.status(404).send('Not found');
+            res.status(200).json(dataCar);
+        });
+    })
+
 };
 
 apiController.deleteCoche = (req, res) =>{
