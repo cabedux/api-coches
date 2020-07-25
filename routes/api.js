@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/coches', apiController.getListaCoches);
 router.get('/coches/:id', apiController.getCoche);
-router.post('/coche', apiController.addCoche);
+router.post('/coches', apiController.addCoche);
 router.put('/coches/:id', apiController.updateCoche);
 router.delete('/coches/:id', apiController.deleteCoche);
 
