@@ -3,10 +3,10 @@ const mysql      = require('mysql');
 
 //funcion para crear la conexion con la bbdd
 const connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'root',
-  database : 'coches_api'
+  host     : 'db4free.net',
+  user     : 'rootcode',
+  password : 'rootroot',
+  database : 'api_coches'
 });
  
 connection.connect(
