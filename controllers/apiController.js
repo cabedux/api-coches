@@ -70,4 +70,29 @@ apiController.deleteCoche = (req, res) =>{
     });
 };
 
+apiController.getListaCochesFiltrada = (req, res) => {
+
+	const modelo = req.query.modelo;
+	const marca = req.query.marca;
+
+	let queryAllCars = `SELECT * from coche`;
+
+	if (modelo) {
+        queryAllCars += ` WHERE modelo = '${modelo}'`;        
+        if (marca) {
+            queryAllCars += ` AND marca = '${marca}'`;
+        }
+	} else if (marca) {
+        if (marca) {
+            queryAllCars += ` WHERE marca = '${marca}'`;
+        }
+    }
+
+	connection.query(queryAllCars, (err, dataCars) => {
+		if (err) res.status(500).send(err);
+		if (dataCars.length == 0) res.status(404).send('Not found');
+		res.status(200).json(dataCars);
+	});
+};
+
 module.exports = apiController;
