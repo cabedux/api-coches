@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/coches', apiController.getListaCoches);
+router.get('/coches/search', apiController.getListaCochesFiltrada);
 router.get('/coches/:id', apiController.getCoche);
 router.post('/coches', apiController.addCoche);
 router.put('/coches/:id', apiController.updateCoche);
